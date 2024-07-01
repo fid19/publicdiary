@@ -244,18 +244,19 @@ export async function updateSession(request: NextRequest) {
     const session = request.cookies.get("session")?.value;
     if (!session)
       return NextResponse.redirect(new URL("/sign-in", request.url));
-    const parsed = await decrypt(session);
+    // const parsed = await decrypt(session);
 
-    parsed.expires = new Date(Date.now() + 1000 * 60 * 60 * 24);
+    // parsed.expires = new Date(Date.now() + 1000 * 60 * 60 * 24);
 
-    res.cookies.set({
-      name: "session",
-      value: await encrypt(parsed),
-      httpOnly: true,
-      expires: parsed.expires,
-    });
+    // res.cookies.set({
+    //   name: "session",
+    //   value: await encrypt(parsed),
+    //   httpOnly: true,
+    //   expires: parsed.expires,
+    // });
 
-    return res;
+    // return res;
+    return request;
   } catch (err) {
     console.log(err);
 
