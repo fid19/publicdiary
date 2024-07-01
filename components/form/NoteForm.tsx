@@ -27,11 +27,11 @@ const NoteForm = ({
   noteProps,
 }: {
   noteProps: {
-    noteContent: string;
-    noteIsPrivate: boolean;
-    noteDisableComments: boolean;
+    noteContent?: string;
+    noteIsPrivate?: boolean;
+    noteDisableComments?: boolean;
     noteActionType: string;
-    noteId: string;
+    noteId?: string;
   };
 }) => {
   const router = useRouter();
@@ -94,7 +94,7 @@ const NoteForm = ({
 
         await revalidateUrl({ path: "/notes" });
         router.push("/notes");
-      } else if (noteActionType === "edit") {
+      } else if (noteActionType === "edit" && noteId) {
         editNoteById({
           values: {
             content: cleanContent,
