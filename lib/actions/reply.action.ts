@@ -24,7 +24,10 @@ export async function getNoteReply(params: { noteId: string; path: string }) {
       note: noteReply,
     };
   } catch (err) {
-    console.log(err);
+    if (err instanceof Error) {
+      console.log(err);
+      throw err;
+    }
   }
 }
 

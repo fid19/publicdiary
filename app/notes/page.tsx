@@ -1,20 +1,11 @@
 import FloatingPlus from "@/components/shared/FloatingPlus";
 import React from "react";
-import { TiEdit, TiDelete } from "react-icons/ti";
-import { GiNotebook } from "react-icons/gi";
 import Image from "next/image";
-import { getAllNotes } from "@/lib/actions/note.action";
-import parse from "html-react-parser";
-import NoteList from "@/components/NoteList";
-import { map } from "zod";
-import NoNotesDisplay from "@/components/shared/NoNotesDisplay";
 import { getSession } from "@/lib/actions/user.action";
 import { redirect } from "next/navigation";
 import DisplayNote from "@/components/DisplayNote";
 
 const Notes = async () => {
-  const currentDate = new Date(2024, 6, 19, 5, 6, 9);
-
   const { user } = await getSession();
 
   if (!user?._id) redirect("/sign-in");

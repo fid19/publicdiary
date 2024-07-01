@@ -21,10 +21,19 @@ import { useAuth } from "@/context/AuthProvider";
 import { AlertDestructive } from "@/components/shared/AlertDestructive";
 import { useRouter } from "next/navigation";
 import DOMPurify from "dompurify";
-import { revalidatePath } from "next/cache";
 import { editNoteById, revalidateUrl } from "@/lib/actions/note.action";
 
-const NoteForm = ({ noteProps }) => {
+const NoteForm = ({
+  noteProps,
+}: {
+  noteProps: {
+    noteContent: string;
+    noteIsPrivate: boolean;
+    noteDisableComments: boolean;
+    noteActionType: string;
+    noteId: string;
+  };
+}) => {
   const router = useRouter();
   const editorRef = useRef(null);
   // const log = () => {
@@ -96,12 +105,14 @@ const NoteForm = ({ noteProps }) => {
         });
       }
     } catch (err) {
-      console.log(err.message);
+      if (err instanceof Error) {
+        console.log(err.message);
 
-      return form.setError("root.serverError", {
-        type: "401",
-        message: err.message,
-      });
+        return form.setError("root.serverError", {
+          type: "401",
+          message: err.message,
+        });
+      }
     }
   };
 
@@ -134,9 +145,10 @@ const NoteForm = ({ noteProps }) => {
                           <div className="!my-4 h-full"></div>
                           <Editor
                             apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
-                            onInit={(_evt, editor) =>
-                              (editorRef.current = editor)
-                            }
+                            onInit={(_evt, editor) => {
+                              // @ts-ignore
+                              editorRef.current = editor;
+                            }}
                             onBlur={field.onBlur}
                             onEditorChange={(content) =>
                               field.onChange(content)

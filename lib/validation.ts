@@ -33,8 +33,8 @@ export const UserLoginSchema = z.object({
 
 export const NoteSchema = z.object({
   content: z.string().min(50),
-  isPrivate: z.boolean().default(false).optional(),
-  disableComments: z.boolean().default(false).optional(),
+  isPrivate: z.boolean().default(false),
+  disableComments: z.boolean().default(false),
 });
 
 export const ImageDataSchema = z.object({
@@ -63,3 +63,7 @@ export const IProfileUpdateSchema = z.object({
   description: z.string().optional(),
   profilePicUrl: z.string().optional(),
 });
+
+export interface noteI {
+  note: any[];
+}

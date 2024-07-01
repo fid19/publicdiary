@@ -1,5 +1,5 @@
 "use client";
-import { getSession, loginUser } from "@/lib/actions/user.action";
+import { loginUser } from "@/lib/actions/user.action";
 import { UserLoginSchema } from "@/lib/validation";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";

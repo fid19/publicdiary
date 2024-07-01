@@ -4,7 +4,7 @@ import { getSession } from "@/lib/actions/user.action";
 import { redirect } from "next/navigation";
 import React from "react";
 
-const Page = async ({ params }) => {
+const Page = async ({ params }: { params: { noteId: string } }) => {
   const { user } = await getSession();
 
   if (!user?._id) redirect("/sign-in");

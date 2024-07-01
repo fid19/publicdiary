@@ -1,9 +1,6 @@
 import HTMLParser from "@/components/shared/HTMLParser";
 import Reply from "@/components/shared/Reply";
 import ReplyForm from "@/components/shared/ReplyForm";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { MdDeleteForever } from "react-icons/md";
 
@@ -13,17 +10,18 @@ import { getSession } from "@/lib/actions/user.action";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { TiDelete, TiEdit } from "react-icons/ti";
 
 const Page = async ({ params }: { params: { noteId: string } }) => {
   const singleNote = await getNoteById({ id: params.noteId });
 
   const { user } = await getSession();
 
-  const { note } = await getNoteReply({
+  const result = await getNoteReply({
     noteId: params.noteId,
     path: `/notes/${params.noteId}`,
   });
+
+  const note = result?.note || undefined;
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-primary-500/95  p-3 pt-32 md:px-16 md:pt-36">
@@ -35,7 +33,7 @@ const Page = async ({ params }: { params: { noteId: string } }) => {
           <div className="rounded-lg backdrop-blur-xl">
             <div className="mb-4 flex flex-wrap items-center justify-between gap-4">
               <div className="flex items-center gap-2">
-                <div className="size-10 rounded-full relative">
+                <div className="relative size-10 rounded-full">
                   <Image
                     src={
                       singleNote?.note.author.profilePic
@@ -49,10 +47,10 @@ const Page = async ({ params }: { params: { noteId: string } }) => {
                   />
                 </div>
                 <h1 className="primary-text-gradient text-[22px] font-bold">
-                  {singleNote.note.author.username}
+                  {singleNote?.note.author.username}
                 </h1>
                 <p className="text-[16px] font-medium !text-gray-200">
-                  | posted {singleNote.note.joinedAt.toDateString()}
+                  | posted {singleNote?.note.joinedAt.toDateString()}
                 </p>
               </div>
               {user?._id &&
@@ -95,7 +93,7 @@ const Page = async ({ params }: { params: { noteId: string } }) => {
             </div>
           </div>
         </div>
-        {note.length ? (
+        {note?.length ? (
           <div className="mt-8">
             <h1 className="primary-text-gradient mb-5 text-[20px] font-bold text-white">
               Replies

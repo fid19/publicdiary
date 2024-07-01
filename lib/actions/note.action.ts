@@ -8,11 +8,18 @@ import { revalidatePath } from "next/cache";
 import { NoteSchema } from "../validation";
 import { redirect } from "next/navigation";
 
-export async function revalidateUrl(params) {
+export async function revalidateUrl(params: { path: string }) {
   revalidatePath(params.path);
 }
 
-export async function editNoteById(params) {
+export async function editNoteById(params: {
+  values: {
+    isPrivate: boolean;
+    disableComments: boolean;
+    content: string;
+  };
+  noteId: string;
+}) {
   try {
     const cookiesRes = await getSession();
 
@@ -41,7 +48,7 @@ export async function editNoteById(params) {
 
     const { isPrivate, disableComments, content } = submission?.data;
 
-    const result = await Notes.findByIdAndUpdate(noteId, {
+    await Notes.findByIdAndUpdate(noteId, {
       isPrivate,
       disableComments,
       content,
@@ -55,7 +62,7 @@ export async function editNoteById(params) {
   }
 }
 
-export async function getNoteById(params) {
+export async function getNoteById(params: { id: string }) {
   try {
     const { id } = params;
 
@@ -75,7 +82,7 @@ export async function getNoteById(params) {
   }
 }
 
-export async function getAllNotes(params) {
+export async function getAllNotes(params: { _id: string }) {
   try {
     // const { user } = await getSession();
 
