@@ -4,7 +4,7 @@ import NoteList from "./NoteList";
 import NoNotesDisplay from "./shared/NoNotesDisplay";
 import { getSession } from "@/lib/actions/user.action";
 
-const DisplayNote = async ({ _id }) => {
+const DisplayNote = async ({ _id }: { _id: string }) => {
   const result = await getAllNotes({ _id });
   const { user } = await getSession();
 

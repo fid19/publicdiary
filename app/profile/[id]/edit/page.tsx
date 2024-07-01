@@ -5,7 +5,7 @@ import { BiError } from "react-icons/bi";
 
 import React from "react";
 
-const Page = async ({ params }) => {
+const Page = async ({ params }: { params: { id: string } }) => {
   const { user } = await getSession();
 
   const { id } = params;

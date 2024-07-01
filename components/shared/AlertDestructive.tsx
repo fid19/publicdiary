@@ -2,7 +2,7 @@ import { AlertCircle } from "lucide-react";
 
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
-export function AlertDestructive({ message }) {
+export function AlertDestructive({ message }: { message: string | undefined }) {
   return (
     <Alert className="bg-red-100" variant="destructive">
       <AlertCircle className="mt-1 size-4" />

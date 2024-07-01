@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const Page = async ({ params }) => {
+const Page = async ({ params }: { params: { id: string } }) => {
   const { id } = params;
 
   const { user } = await getSession();

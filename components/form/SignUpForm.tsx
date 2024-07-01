@@ -64,7 +64,6 @@ const SignUpForm = () => {
           const field = errorValue as Field;
           return form.setError(field, {
             type: "manual-input",
-            // @ts-expect-error
             message: fieldErrors[field]?.[0] || undefined,
           });
         });
