@@ -13,7 +13,6 @@ import { UserLoginParams, UserSignUpParams } from "./shared.types";
 import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import console from "console";
 import { revalidatePath } from "next/cache";
 
 const secretKey = new TextEncoder().encode(process.env.JWT_SECRET_KEY!);

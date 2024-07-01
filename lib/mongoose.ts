@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
 
+if (!process.env.MONGODB_URL) {
+  console.log("MONGODB URI is not defined");
+
+  throw new Error("MONGODB_URI is not defined");
+}
+
+let isConnected: boolean = false;
+const MONGODB_URL: string = process.env.MONGODB_URL;
+
 export const connectToDatabase = async () => {
-  if (!process.env.MONGODB_URL) {
-    console.log("MONGODB URI is not defined");
-
-    throw new Error("MONGODB_URI is not defined");
-  }
-
-  let isConnected: boolean = false;
-  const MONGODB_URL: string = process.env.MONGODB_URL;
-
   mongoose.set("strictQuery", true);
 
   if (!process.env.MONGODB_URL) {
