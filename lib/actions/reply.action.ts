@@ -7,9 +7,8 @@ import { CreateReplyParams } from "./shared.types";
 import { getSession } from "./user.action";
 import Notes from "@/database/note.model";
 import { revalidatePath } from "next/cache";
-import path from "path";
 
-export async function getNoteReply(params) {
+export async function getNoteReply(params: { noteId: string; path: string }) {
   try {
     await connectToDatabase();
 
@@ -29,7 +28,7 @@ export async function getNoteReply(params) {
   }
 }
 
-export async function getAllRepliesByAuthorId(params) {
+export async function getAllRepliesByAuthorId(params: { _id: string }) {
   try {
     const { _id } = params;
 
@@ -51,7 +50,7 @@ export async function createReply(params: CreateReplyParams) {
   try {
     await connectToDatabase();
 
-    const { content, noteId, path } = params;
+    const { content, noteId } = params;
 
     const submission = ReplySchema.safeParse({
       answer: content,

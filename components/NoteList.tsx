@@ -2,7 +2,6 @@ import Link from "next/link";
 import React from "react";
 import { HiOutlinePencilSquare } from "react-icons/hi2";
 import { MdDeleteForever } from "react-icons/md";
-import IconOnClick from "./IconOnClick";
 import Alert from "./Alert";
 
 interface NoteI {
@@ -27,7 +26,7 @@ const NoteList = ({
 }) => {
   return (
     <>
-      <div className="hover:border-2 flex flex-col justify-between space-y-4 rounded-lg hover:border-black/5 bg-black/5 p-4 backdrop-blur-md  hover:bg-black/10">
+      <div className="flex flex-col justify-between space-y-4 rounded-lg bg-black/5 p-4 backdrop-blur-md hover:border-2 hover:border-black/5  hover:bg-black/10">
         <Link
           className="h-[100px]"
           href={

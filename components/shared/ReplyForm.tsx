@@ -70,6 +70,7 @@ const ReplyForm = ({
                 <FormControl>
                   <Editor
                     apiKey={process.env.NEXT_PUBLIC_TINYMCE_API_KEY}
+                    // @ts-ignore
                     onInit={(_evt, editor) => (editorRef.current = editor)}
                     onBlur={field.onBlur}
                     onEditorChange={(content) => field.onChange(content)}

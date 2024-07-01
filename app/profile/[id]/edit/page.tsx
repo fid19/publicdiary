@@ -30,7 +30,6 @@ const Page = async ({ params }) => {
   return (
     <ProfileEdit
       username={user?.username}
-      email={user?.email}
       description={user?.description}
       profilePic={user?.profilePic}
     />

@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/sheet";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useAuth } from "@/context/AuthProvider";
-import { getSession, logout } from "@/lib/actions/user.action";
+import { logout } from "@/lib/actions/user.action";
 
 const navbarItems = [
   {

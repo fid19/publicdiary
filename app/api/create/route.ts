@@ -44,6 +44,8 @@ export const POST = async (request: Request) => {
 
     return NextResponse.json({ status: "success", data: result });
   } catch (error) {
-    return NextResponse.json({ status: "error", error: error.message });
+    if (error instanceof Error) {
+      return NextResponse.json({ status: "error", error: error.message });
+    }
   }
 };

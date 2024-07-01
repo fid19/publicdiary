@@ -2,13 +2,26 @@ import Image from "next/image";
 import React from "react";
 import HTMLParser from "./HTMLParser";
 
-const Reply = ({ i }) => {
-  const { _id, author, noteId, content, joinedAt } = i;
+const Reply = ({
+  i,
+}: {
+  i: {
+    _id: string;
+    author: {
+      profilePic: string;
+      username: string;
+    };
+    noteId: string;
+    content: string;
+    joinedAt: Date;
+  };
+}) => {
+  const { author, noteId, content, joinedAt } = i;
 
   return (
     <div className="mb-12 flex flex-col text-white" id={noteId}>
       <div className="mb-5 flex gap-3">
-        <div className="size-7 rounded-full relative bg-primary-500">
+        <div className="relative size-7 rounded-full bg-primary-500">
           <Image
             src={
               i?.author.profilePic

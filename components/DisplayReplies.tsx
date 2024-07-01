@@ -1,11 +1,9 @@
-import { getAllNotes } from "@/lib/actions/note.action";
 import React from "react";
 import NoteList from "./NoteList";
 import NoNotesDisplay from "./shared/NoNotesDisplay";
-import { getSession } from "@/lib/actions/user.action";
 import { getAllRepliesByAuthorId } from "@/lib/actions/reply.action";
 
-const DisplayReplies = async ({ _id }) => {
+const DisplayReplies = async ({ _id }: { _id: string }) => {
   const result = await getAllRepliesByAuthorId({ _id });
 
   return (

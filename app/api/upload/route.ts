@@ -2,7 +2,6 @@ import { createPresignedPost } from "@aws-sdk/s3-presigned-post";
 import { S3Client } from "@aws-sdk/client-s3";
 import { v4 as uuidv4 } from "uuid";
 import { getSession } from "@/lib/actions/user.action";
-import { revalidatePath } from "next/cache";
 
 export async function POST(request: Request) {
   const cookiesRes = await getSession();
@@ -11,7 +10,7 @@ export async function POST(request: Request) {
     throw new Error("User could not be authenticated");
   }
 
-  const { filename, contentType, imageId } = await request.json();
+  const { contentType, imageId } = await request.json();
 
   if (!contentType.startsWith("image")) throw new Error("Invalid file type");
 
@@ -34,7 +33,7 @@ export async function POST(request: Request) {
 
     return Response.json({ url, fields });
   } catch (error) {
-    console.log(error.message);
+    error instanceof Error && console.log(error.message);
     return Response.json({
       status: "Failed",
       message: {

@@ -1,20 +1,14 @@
 "use client";
 
 // import { useLoader } from "@react-three/fiber";
-import {
-  Float,
-  PresentationControls,
-  Text,
-  useAnimations,
-  useGLTF,
-} from "@react-three/drei";
-import { useEffect, useRef } from "react";
+import { Float, PresentationControls, useGLTF } from "@react-three/drei";
+// import { useRef } from "react";
 
 export default function Notebook() {
-  const { nodes, materials } = useGLTF("/assets/notebook.glb");
-  const val = useGLTF("/assets/notebook.glb");
+  const { nodes } = useGLTF("/assets/notebook.glb");
+  // const val = useGLTF("/assets/notebook.glb");
 
-  const group = useRef();
+  // const group = useRef();
 
   // const { actions } = useAnimations(animations, group);
 

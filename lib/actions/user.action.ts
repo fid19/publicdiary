@@ -153,7 +153,11 @@ export const loginUser = async (params: UserLoginParams) => {
   return redirect("/");
 };
 
-export async function updateUser(params) {
+export async function updateUser(params: {
+  profilePicUrl: string | undefined;
+  username: string;
+  description: string | undefined;
+}) {
   try {
     connectToDatabase();
 
@@ -236,7 +240,7 @@ export async function getSession() {
   }
 }
 
-export async function getUserbyId(params) {
+export async function getUserbyId(params: { _id: string }) {
   try {
     connectToDatabase();
 

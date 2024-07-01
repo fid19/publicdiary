@@ -12,14 +12,22 @@ import axios from "axios";
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
-const AuthContext = createContext(undefined);
+interface UserType {
+  [key: string]: string;
+}
+interface AuthContextType {
+  user: UserType | null;
+  fetchAuthStatus: () => Promise<void>;
+}
+
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export default function AuthProvider({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<UserType | null>(null);
 
   const { mutate } = useSWR("/api/auth", fetcher, {
     revalidateIfStale: false,
@@ -44,8 +52,12 @@ export default function AuthProvider({
   );
 }
 
-export const useAuth = () => {
+export const useAuth = (): AuthContextType => {
   const context = useContext(AuthContext);
+
+  if (!context) {
+    throw new Error("useAuth must be used under a provider");
+  }
 
   return context;
 };

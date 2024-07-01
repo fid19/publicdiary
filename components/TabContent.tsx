@@ -4,7 +4,7 @@ import React from "react";
 import DisplayNote from "./DisplayNote";
 import DisplayReplies from "./DisplayReplies";
 
-const TabContent = ({ _id }) => {
+const TabContent = ({ _id }: { _id: string }) => {
   return (
     <div>
       <Tabs defaultValue="notes" className="w-full">

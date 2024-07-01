@@ -3,9 +3,14 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { FormLabel } from "../ui/form";
 import { Input } from "../ui/input";
-import image from "next/image";
 
-const ImageChooser = ({ profilePicUrl, handleProfilePic }) => {
+const ImageChooser = ({
+  profilePicUrl,
+  handleProfilePic,
+}: {
+  profilePicUrl: string | undefined;
+  handleProfilePic: Function;
+}) => {
   const existingImage = Boolean(profilePicUrl);
 
   const [previewImage, setPreviewImage] = useState<string | null>(

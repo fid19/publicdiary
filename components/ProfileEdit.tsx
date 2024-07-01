@@ -19,9 +19,41 @@ import {
 import { Textarea } from "./ui/textarea";
 import { Input } from "./ui/input";
 
-const ProfileEdit = ({ username, email, description, profilePic }) => {
+type FieldErrors = {
+  profilePicUrl?: string[];
+  description?: string[];
+  username: string[];
+};
+
+type UpdateResult = {
+  status: "failed" | "success";
+  message: {
+    type: string;
+    fieldErrors: FieldErrors;
+  };
+};
+
+const ProfileEdit = ({
+  username,
+  description,
+  profilePic,
+}: {
+  username: string;
+  description: string | undefined;
+  profilePic: string | undefined;
+}) => {
+  const form = useForm<z.infer<typeof IProfileUpdateSchema>>({
+    resolver: zodResolver(IProfileUpdateSchema),
+    mode: "onBlur",
+    defaultValues: {
+      username: username || "",
+      description: description || "",
+      profilePicUrl: profilePic || "",
+    },
+  });
+
   async function onSubmit(value: z.infer<typeof IProfileUpdateSchema>) {
-    const { description, username, email } = value;
+    const { description, username } = value;
     let profilePicUrl = "";
     console.log("value");
 
@@ -47,7 +79,13 @@ const ProfileEdit = ({ username, email, description, profilePic }) => {
         const formData = new FormData();
 
         Object.entries(fields).forEach(([key, value]) => {
-          formData.append(key, value);
+          if (
+            typeof value === "string" ||
+            value instanceof Blob ||
+            value instanceof File
+          ) {
+            formData.append(key, value);
+          }
         });
 
         formData.append("file", value.profilePic.file);
@@ -58,7 +96,8 @@ const ProfileEdit = ({ username, email, description, profilePic }) => {
         });
 
         if (uploadResponse.ok) {
-          profilePicUrl = formData.get("key")?.split("/")[1];
+          const value = formData.get("key") as string;
+          profilePicUrl = value.split("/")[1];
           profilePicUrl = `${profilePicUrl}?${Date.now().toString()}`;
         } else {
           console.error("S3 Upload Error:", uploadResponse);
@@ -70,39 +109,27 @@ const ProfileEdit = ({ username, email, description, profilePic }) => {
     }
 
     try {
-      const result = await updateUser({
+      const result = (await updateUser({
         profilePicUrl,
         description,
         username,
-        email,
-      });
-      console.log(result);
+      })) as UpdateResult;
 
       if (result?.status === "failed") {
-        Object.keys(result?.message.fieldErrors).map((key) => {
-          form.setError(key, {
+        Object.keys(result?.message.fieldErrors).map((key) =>
+          form.setError(key as keyof FieldErrors, {
             type: "manual-input",
-            message: result?.message.fieldErrors[key][0],
-          });
-        });
+            // @ts-ignore
+            message: result?.message.fieldErrors[key]?.[0],
+          })
+        );
       }
     } catch (err) {
       console.log(err);
     }
   }
 
-  const form = useForm<z.infer<typeof IProfileUpdateSchema>>({
-    resolver: zodResolver(IProfileUpdateSchema),
-    mode: "onBlur",
-    defaultValues: {
-      username: username || "",
-      email: email || "",
-      description: description || "",
-      profilePicUrl: profilePic || "",
-    },
-  });
-
-  function handleProfilePic(file, altText) {
+  function handleProfilePic(file: File, altText: string) {
     form.setValue("profilePic", {
       file,
       altText,

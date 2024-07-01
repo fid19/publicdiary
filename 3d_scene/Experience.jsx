@@ -1,20 +1,7 @@
-import { Suspense, useRef } from "react";
+import { useRef } from "react";
 import Notebook from "./Notebook.jsx";
-import Placeholder from "./Placeholder.jsx";
 import * as THREE from "three";
-import {
-  AccumulativeShadows,
-  BakeShadows,
-  ContactShadows,
-  Environment,
-  Lightformer,
-  OrbitControls,
-  RandomizedLight,
-  Sky,
-  SoftShadows,
-  useHelper,
-} from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { Environment, Lightformer, useHelper } from "@react-three/drei";
 
 export default function Experience() {
   // useFrame((state, delta) => {

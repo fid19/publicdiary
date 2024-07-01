@@ -1,6 +1,6 @@
 import { getSession } from "@/lib/actions/user.action";
 import { connectToDatabase } from "@/lib/mongoose";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export const GET = async (request: Request) => {
   try {
@@ -16,6 +16,8 @@ export const GET = async (request: Request) => {
 
     return NextResponse.json({});
   } catch (error) {
-    return NextResponse.json({ status: "error", error: error.message });
+    if (error instanceof Error) {
+      return NextResponse.json({ status: "error", error: error.message });
+    }
   }
 };
