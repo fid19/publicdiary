@@ -39,6 +39,7 @@
     "eslint-plugin-n": "^17.7.0",
     "eslint-plugin-promise": "^6.2.0",
     "eslint-plugin-tailwindcss": "^3.17.0",
+    "framer-motion": "^11.2.13",
     "html-react-parser": "^5.1.10",
     "isaac": "^0.0.5",
     "jose": "^5.4.0",

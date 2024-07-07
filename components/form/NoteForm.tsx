@@ -93,7 +93,7 @@ const NoteForm = ({
         }
 
         await revalidateUrl({ path: "/notes" });
-        router.push("/notes");
+        router.push(`/notes/${result.data._id}`);
       } else if (noteActionType === "edit" && noteId) {
         editNoteById({
           values: {

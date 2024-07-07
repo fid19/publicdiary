@@ -19,14 +19,16 @@ const NoteList = ({
   result,
   isLoggedIn,
   type,
+  path,
 }: {
   result: NoteI;
   isLoggedIn: boolean;
   type?: string | undefined;
+  path?: string | undefined;
 }) => {
   return (
     <>
-      <div className="flex flex-col justify-between space-y-4 rounded-lg bg-black/5 p-4 backdrop-blur-md hover:border-2 hover:border-black/5  hover:bg-black/10">
+      <div className="flex flex-col justify-between space-y-4 rounded-lg bg-black/15 p-4 backdrop-blur-md hover:border-2 hover:border-black/5  hover:bg-black/10">
         <Link
           className="h-[100px]"
           href={
@@ -60,6 +62,9 @@ const NoteList = ({
                 }
                 title="Are you absolutely sure?"
                 description="This action cannot be undone"
+                action="delete"
+                path={path}
+                noteId={result?._id.toString()}
               />
             </>
           )}

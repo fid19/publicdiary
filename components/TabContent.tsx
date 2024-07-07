@@ -11,20 +11,20 @@ const TabContent = ({ _id }: { _id: string }) => {
         <TabsList className="w-full bg-[#5b694c]">
           <TabsTrigger
             value="notes"
-            className="w-full text-white data-[state='active']:bg-[#6d8552] data-[state='active']:!text-white"
+            className="w-full text-white data-[state='active']:bg-primary-500 data-[state='active']:!text-white"
           >
             Notes
           </TabsTrigger>
           <TabsTrigger
             value="replies"
-            className="w-full text-white data-[state='active']:bg-[#6d8552] data-[state='active']:!text-white"
+            className="w-full text-white data-[state='active']:bg-primary-500 data-[state='active']:!text-white"
           >
             Replies
           </TabsTrigger>
         </TabsList>
         <TabsContent value="notes">
           <div className="min-h-48">
-            <DisplayNote _id={_id} />
+            <DisplayNote path={`/profile/${_id}`} _id={_id} />
           </div>
         </TabsContent>
         <TabsContent value="replies">

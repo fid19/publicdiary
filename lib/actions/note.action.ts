@@ -7,9 +7,55 @@ import mongoose from "mongoose";
 import { revalidatePath } from "next/cache";
 import { NoteSchema } from "../validation";
 import { redirect } from "next/navigation";
+import Reply from "@/database/reply.model";
 
 export async function revalidateUrl(params: { path: string }) {
   revalidatePath(params.path);
+}
+
+export async function deleteNoteById(params: {
+  id: string;
+  path: string | undefined;
+}) {
+  const { path } = params;
+  const id = new mongoose.Types.ObjectId(params.id);
+
+  try {
+    const cookiesRes = await getSession();
+
+    if (!cookiesRes) {
+      throw new Error("User could not be authenticated");
+    }
+
+    const { user } = cookiesRes;
+
+    connectToDatabase();
+
+    const result = await Notes.findById(id).populate("author", "_id");
+
+    if (!result) {
+      throw new Error("Cannot find note that matches id");
+    }
+
+    if (result.author._id.toString() !== user?._id) {
+      throw new Error("Cannot delete note, User is not the author");
+    }
+
+    await Notes.findByIdAndDelete(id);
+
+    await Reply.deleteMany({
+      noteId: id,
+    });
+
+    revalidatePath(path || "/notes");
+
+    if (!path) {
+      return redirect("/notes");
+    }
+  } catch (err) {
+    console.log(err);
+    throw err;
+  }
 }
 
 export async function editNoteById(params: {

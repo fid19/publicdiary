@@ -27,7 +27,7 @@ const Notes = async () => {
             <GiNotebook className="ml-3 inline text-lime-100" />
           </div> */}
 
-          <DisplayNote _id={user?._id} />
+          <DisplayNote path="/notes" _id={user?._id} />
         </div>
       </section>
     </>

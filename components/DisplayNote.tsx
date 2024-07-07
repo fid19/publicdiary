@@ -4,7 +4,13 @@ import NoteList from "./NoteList";
 import NoNotesDisplay from "./shared/NoNotesDisplay";
 import { getSession } from "@/lib/actions/user.action";
 
-const DisplayNote = async ({ _id }: { _id: string }) => {
+const DisplayNote = async ({
+  _id,
+  path,
+}: {
+  _id: string;
+  path?: string | undefined;
+}) => {
   const result = await getAllNotes({ _id });
   const { user } = await getSession();
 
@@ -20,6 +26,7 @@ const DisplayNote = async ({ _id }: { _id: string }) => {
                   result={note}
                   isLoggedIn={!!user?._id}
                   type="notes"
+                  path={path}
                 />
               );
             })}

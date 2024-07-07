@@ -1,3 +1,5 @@
+"use client";
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,6 +11,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { deleteNoteById } from "@/lib/actions/note.action";
 
 import React from "react";
 
@@ -16,10 +19,16 @@ const Alert = ({
   trigger,
   title,
   description,
+  action,
+  path,
+  noteId,
 }: {
   trigger: React.ReactElement;
   title: string;
   description: string;
+  action: string;
+  path?: string | undefined;
+  noteId: string;
 }) => {
   return (
     <AlertDialog>
@@ -35,7 +44,10 @@ const Alert = ({
           <AlertDialogCancel className="border-none bg-red-400">
             Cancel
           </AlertDialogCancel>
-          <AlertDialogAction className="border-none bg-black/10">
+          <AlertDialogAction
+            className="border-none bg-black/10"
+            onClick={() => deleteNoteById({ id: noteId, path })}
+          >
             Continue
           </AlertDialogAction>
         </AlertDialogFooter>

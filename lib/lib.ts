@@ -47,6 +47,7 @@ export async function updateSession(request: NextRequest) {
       httpOnly: true,
       expires: new Date(0),
     });
+
     return res;
   }
 }
